@@ -19,6 +19,6 @@
         "yaml": "^1.6.0"
     },
     "scripts": {
-        "postinstall": "tsc"
+        "prepare": "tsc"
     }
 }
