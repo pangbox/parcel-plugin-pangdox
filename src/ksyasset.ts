@@ -52,7 +52,7 @@ class KaitaiStructAsset extends Asset {
   constructor(filepath: string, options: any) {
     super(filepath, options);
     this.type = "html";
-    this.renderer = new TemplateRenderer(this.templatesDir, this);
+    this.renderer = new TemplateRenderer(this.templatesDir, this.kaitaiDir, this);
   }
 
   get repoRoot() {
@@ -65,6 +65,10 @@ class KaitaiStructAsset extends Asset {
 
   get templatesDir() {
     return path.resolve(this.options.rootDir, "templates");
+  }
+
+  get kaitaiDir() {
+    return path.resolve(this.options.rootDir, "scripts/kaitai");
   }
 
   loadExamples() {

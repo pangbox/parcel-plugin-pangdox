@@ -1,8 +1,6 @@
 import KaitaiStream from "kaitai-struct/KaitaiStream";
 import path from "path";
 
-const kaitaiDir = "../../../../src/scripts/kaitai/";
-
 interface Span {
   id: string;
   class: string;
@@ -12,12 +10,12 @@ interface Span {
   level: number;
 }
 
-function getParser(parserName: string) {
+function getParser(kaitaiDir: string, parserName: string) {
   return require(path.join(kaitaiDir, parserName));
 }
 
-function parseBin(data: Buffer, parser: string) {
-  const Struct = getParser(parser);
+function parseBin(data: Buffer, kaitaiDir: string, parser: string) {
+  const Struct = getParser(kaitaiDir, parser);
   const struct = new Struct(new KaitaiStream(data));
   struct._read();
   return struct;
@@ -53,7 +51,7 @@ function extractSpans(struct: any, level = 0) {
   return spans;
 }
 
-export default function hexdump(data: Buffer, parser: string) {
+export default (kaitaiDir: string) => function hexdump(data: Buffer, parser: string) {
   let linebuf = "",
     hexbuf = "",
     asciibuf = "";
@@ -62,7 +60,7 @@ export default function hexdump(data: Buffer, parser: string) {
   let spanstack: Span[] = [];
 
   if (parser) {
-    const parsed = parseBin(data, parser);
+    const parsed = parseBin(data, kaitaiDir, parser);
     spans = extractSpans(parsed);
   }
 

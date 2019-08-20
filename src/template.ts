@@ -29,13 +29,13 @@ function patchFsWithDeps(engine: Liquid, asset: Asset) {
 export class TemplateRenderer {
   engine: Liquid;
 
-  constructor(templateDir: string, asset: Asset) {
+  constructor(templateDir: string, kaitaiDir: string, asset: Asset) {
     this.engine = new Liquid({ root: templateDir, extname: ".html" });
     this.engine.registerFilter("yaml", yamlFilter);
     this.engine.registerFilter("highlight", highlightFilter);
     this.engine.registerFilter("stripdocs", stripdocsFilter);
     this.engine.registerFilter("markdown", markdownFilter);
-    this.engine.registerFilter("hexdump", hexdumpFilter);
+    this.engine.registerFilter("hexdump", hexdumpFilter(kaitaiDir));
     this.engine.registerFilter("toHex", toHexFilter);
     this.engine.registerFilter(
       "urlpath",
