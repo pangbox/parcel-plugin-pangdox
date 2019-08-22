@@ -39,6 +39,13 @@ function extractSpans(struct: any, level = 0) {
     if (struct[key]._debug) {
       spans = spans.concat(extractSpans(struct[key], level + 1));
     }
+    if (Array.isArray(struct[key])) {
+      if (struct[key].length && struct[key][0]._debug) {
+        for (const element of struct[key]) {
+          spans = spans.concat(extractSpans(element, level + 1));
+        }
+      }
+    }
   }
 
   spans.sort((a, b) => {
@@ -95,9 +102,10 @@ export default (kaitaiDir: string) => function hexdump(data: Buffer, parser: str
         let breadcrumbs = "";
         for (const span of spanstack) {
           breadcrumbs += ` > ${span.id}`;
-          if (span.value) {
-            breadcrumbs += ` = ${span.value}`;
-          }
+        }
+        const lastSpan = spanstack[spanstack.length-1];
+        if (lastSpan.hasOwnProperty("value")) {
+          breadcrumbs += ` = ${lastSpan.value}`;
         }
         hexbuf += `<span class="structspan"><div class="popup">${breadcrumbs.slice(
           3
