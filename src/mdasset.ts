@@ -2,6 +2,8 @@ import Asset from "parcel-bundler/lib/Asset";
 import path from "path";
 import { TemplateRenderer } from "./template";
 
+const TITLE_RE = /^\# (.+)\n/;
+
 class MarkdownAsset extends Asset {
   ast: string = "";
   renderer: TemplateRenderer;
@@ -29,9 +31,11 @@ class MarkdownAsset extends Asset {
   }
 
   getTemplateContext() {
+    const title = TITLE_RE.exec(this.ast);
     return {
+      title: title != null ? title[1] : undefined,
       code: this.ast,
-      repopath: this.repoRoot,
+      repopath: path.relative(this.repoRoot, this.name),
     };
   }
 
