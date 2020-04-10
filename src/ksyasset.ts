@@ -122,6 +122,7 @@ class KaitaiStructAsset extends Asset {
     if (!this.ast) return {};
 
     return {
+      title: this.ast.file.root.title,
       file: this.ast.file,
       struct: this.ast.file.root,
       parser: this.ast.parserName,
