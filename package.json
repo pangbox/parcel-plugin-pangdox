@@ -11,7 +11,7 @@
         "@types/parcel-bundler": "^1.12.1",
         "@types/yaml": "^1.2.0",
         "glob": "^7.1.6",
-        "highlight.js": "^9.18.1",
+        "highlight.js": "^10.4.1",
         "kaitai-struct": "^0.8.0-SNAPSHOT.11",
         "liquidjs": "^8.5.3",
         "marked": "^0.7.0",
