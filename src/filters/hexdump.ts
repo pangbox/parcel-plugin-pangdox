@@ -16,7 +16,7 @@ function getParser(kaitaiDir: string, parserName: string) {
 
 function parseBin(data: Buffer, kaitaiDir: string, parser: string) {
   const Struct = getParser(kaitaiDir, parser);
-  const struct = new Struct(new KaitaiStream(data));
+  const struct = new Struct(new KaitaiStream(data), null, null, 0);
   struct._read();
   return struct;
 }
@@ -28,15 +28,15 @@ function extractSpans(struct: any, level = 0) {
     if (key[0] === "_") {
       continue;
     }
-    spans.push({
-      id: key,
-      class: struct[key].constructor.name,
-      start: struct._debug[key].start,
-      end: struct._debug[key].end,
-      value: struct[key]._debug ? null : struct[key],
-      level
-    });
     if (struct[key]._debug) {
+      spans.push({
+        id: key,
+        class: struct[key].constructor.name,
+        start: struct._debug[key].start,
+        end: struct._debug[key].end,
+        value: struct[key]._debug ? null : struct[key],
+        level
+      });
       spans = spans.concat(extractSpans(struct[key], level + 1));
     }
     if (Array.isArray(struct[key])) {
