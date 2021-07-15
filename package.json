@@ -1,6 +1,6 @@
 {
     "name": "parcel-plugin-pangdox",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "Parcel plugin for rendering ksy and markdown files into HTML templates.",
     "main": "dist/index.js",
     "devDependencies": {},
