@@ -28,7 +28,7 @@ function extractSpans(struct: any, level = 0) {
     if (key[0] === "_") {
       continue;
     }
-    if (struct[key]._debug) {
+    if (struct._debug[key]) {
       spans.push({
         id: key,
         class: struct[key].constructor.name,
@@ -37,6 +37,8 @@ function extractSpans(struct: any, level = 0) {
         value: struct[key]._debug ? null : struct[key],
         level
       });
+    }
+    if (struct[key]._debug) {
       spans = spans.concat(extractSpans(struct[key], level + 1));
     }
     if (Array.isArray(struct[key])) {
