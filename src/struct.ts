@@ -58,12 +58,16 @@ class KaitaiField {
   id: string;
   type?: string;
   doc?: string;
+  repeat?: string;
+  repeatExpr?: string;
   switch: KaitaiSwitch | null = null;
 
   constructor(parent: KaitaiStruct, raw: Map<any, any>) {
     this.parent = parent;
     this.id = raw.get("id");
     this.doc = raw.get("doc");
+    this.repeat = raw.get("repeat");
+    this.repeatExpr = raw.get("repeat-expr");
     this.parseType(raw.get("type"));
   }
 
