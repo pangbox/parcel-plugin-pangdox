@@ -60,6 +60,7 @@ class KaitaiField {
   doc?: string;
   repeat?: string;
   repeatExpr?: string;
+  size?: string;
   switch: KaitaiSwitch | null = null;
 
   constructor(parent: KaitaiStruct, raw: Map<any, any>) {
@@ -68,6 +69,7 @@ class KaitaiField {
     this.doc = raw.get("doc");
     this.repeat = raw.get("repeat");
     this.repeatExpr = raw.get("repeat-expr");
+    this.size = raw.get("size");
     this.parseType(raw.get("type"));
   }
 
